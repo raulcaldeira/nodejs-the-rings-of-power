@@ -39,4 +39,8 @@ export class TypeormBearersRepository implements BearersRepository {
 
     return await this.ormRepository.save(bearer)
   }
+
+  async deleteBearer(id: number): Promise<void> {
+    await this.ormRepository.delete(id)
+  }
 }

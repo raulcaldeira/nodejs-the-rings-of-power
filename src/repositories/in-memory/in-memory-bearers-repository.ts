@@ -28,4 +28,8 @@ export class InMemoryBearersRepository implements BearersRepository {
     this.items[bearerIndex] = updatedRing
     return updatedRing
   }
+
+  async deleteBearer(id: number): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== id)
+  }
 }

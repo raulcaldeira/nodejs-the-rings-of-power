@@ -9,4 +9,5 @@ export interface BearersRepository {
     id: number,
     data: Partial<CreateBearerInput>,
   ): Promise<Bearer | null>
+  deleteBearer(id: number): Promise<void>
 }
