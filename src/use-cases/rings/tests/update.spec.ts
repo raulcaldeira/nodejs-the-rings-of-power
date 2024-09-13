@@ -1,52 +1,18 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 
-import { RingsRepository } from '@/repositories/rings-repository'
 import { Ring, Forgers } from '@/database/entities/Ring'
 import { UpdateRingUseCase } from '../update'
 import { MaxRingsForgedBySpecie } from '@/use-cases/errors/max-rings-forged-by-this-species-error'
 import { RingNotFoundError } from '@/use-cases/errors/ring-not-found-error'
+import { InMemoryRingsRepository } from '@/repositories/in-memory/in-memory-rings-repository'
 
-class InMemoryRingsRepository implements RingsRepository {
-  private rings: Ring[] = []
-
-  async createRing(data: Omit<Ring, 'id' | 'createdAt'>): Promise<Ring | null> {
-    const ring = { ...data, id: this.rings.length + 1 } as Ring
-    this.rings.push(ring)
-    return ring
-  }
-
-  async getAllRings(): Promise<Ring[]> {
-    return this.rings
-  }
-
-  async countRingsForgedBy(forgedBy: Forgers): Promise<number> {
-    return this.rings.filter((ring) => ring.forgedBy === forgedBy).length
-  }
-
-  async updateRing(
-    id: number,
-    data: Partial<Omit<Ring, 'id' | 'createdAt'>>,
-  ): Promise<Ring | null> {
-    const ringIndex = this.rings.findIndex((ring) => ring.id === id)
-    if (ringIndex === -1) return null
-
-    const updatedRing = { ...this.rings[ringIndex], ...data }
-    this.rings[ringIndex] = updatedRing
-    return updatedRing
-  }
-
-  async findRingById(id: number): Promise<Ring | null> {
-    return this.rings.find((ring) => ring.id === id) || null
-  }
-}
+let ringsRepository: InMemoryRingsRepository
+let sut: UpdateRingUseCase
 
 describe('UpdateRingUseCase', () => {
-  let ringsRepository: InMemoryRingsRepository
-  let updateRingUseCase: UpdateRingUseCase
-
   beforeEach(() => {
     ringsRepository = new InMemoryRingsRepository()
-    updateRingUseCase = new UpdateRingUseCase(ringsRepository)
+    sut = new UpdateRingUseCase(ringsRepository)
   })
 
   it('should update an existing ring', async () => {
@@ -65,7 +31,7 @@ describe('UpdateRingUseCase', () => {
       forgedBy: Forgers.ANOES,
     }
 
-    const { ring } = await updateRingUseCase.execute({
+    const { ring } = await sut.execute({
       id: createdRing!.id,
       ...updatedData,
     })
@@ -82,7 +48,7 @@ describe('UpdateRingUseCase', () => {
 
   it('should return null if the ring does not exist', async () => {
     await expect(
-      updateRingUseCase.execute({
+      sut.execute({
         id: 999,
         name: 'Non-existent Ring',
       }),
@@ -106,7 +72,7 @@ describe('UpdateRingUseCase', () => {
     ])
 
     await expect(
-      updateRingUseCase.execute({
+      sut.execute({
         id: 1,
         forgedBy: Forgers.ELFOS,
       }),
