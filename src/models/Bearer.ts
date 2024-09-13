@@ -4,6 +4,7 @@ export enum Species {
   ELF = 'elfo',
   DWARF = 'anão',
   HUMAN = 'homem',
+  MAGE = 'mago',
 }
 
 @Entity({ name: 'bearers' })
