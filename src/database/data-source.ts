@@ -1,9 +1,9 @@
 // src/database/data-source.ts
 
-import { Bearer } from '@/models/Bearer'
-import { Ring } from '@/models/Ring'
-import { RingBearer } from '@/models/RingBearer'
 import { DataSource } from 'typeorm'
+import { Ring } from './entities/Ring'
+import { Bearer } from './entities/Bearer'
+import { RingBearer } from './entities/RingBearer'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
