@@ -30,21 +30,21 @@ describe('Create Ring Use Case', () => {
     await createRingUseCase.execute({
       name: 'Nenya',
       power: 'Water',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/nenya.png',
     })
 
     await createRingUseCase.execute({
       name: 'Narya',
       power: 'Fire',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/narya.png',
     })
 
     await createRingUseCase.execute({
       name: 'Vilya',
       power: 'Air',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/vilya.png',
     })
 
@@ -52,7 +52,7 @@ describe('Create Ring Use Case', () => {
       createRingUseCase.execute({
         name: 'Extra Elven Ring',
         power: 'Unknown',
-        forgedBy: Forgers.ELFOS,
+        forgedBy: Forgers.ELF,
         imageUrl: 'http://example.com/extra.png',
       }),
     ).rejects.toBeInstanceOf(MaxRingsForgedBySpecie)

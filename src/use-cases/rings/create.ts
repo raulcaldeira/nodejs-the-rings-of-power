@@ -23,9 +23,9 @@ export class CreateRingUseCase {
     imageUrl,
   }: CreateRingUseCaseRequest): Promise<CreateRingUseCaseResponse> {
     const maxRingsPerRace = {
-      [Forgers.ELFOS]: 3,
-      [Forgers.ANOES]: 7,
-      [Forgers.HOMENS]: 9,
+      [Forgers.ELF]: 3,
+      [Forgers.DWARF]: 7,
+      [Forgers.HUMAN]: 9,
       [Forgers.SAURON]: 1,
     }
 

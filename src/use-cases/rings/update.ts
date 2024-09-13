@@ -35,9 +35,9 @@ export class UpdateRingUseCase {
       const countForgers =
         await this.ringsRepository.countRingsForgedBy(forgedBy)
       const maxRingsPerRace = {
-        [Forgers.ELFOS]: 3,
-        [Forgers.ANOES]: 7,
-        [Forgers.HOMENS]: 9,
+        [Forgers.ELF]: 3,
+        [Forgers.DWARF]: 7,
+        [Forgers.HUMAN]: 9,
         [Forgers.SAURON]: 1,
       }
       const maxAllowed = maxRingsPerRace[forgedBy]

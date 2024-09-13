@@ -19,7 +19,7 @@ describe('UpdateRingUseCase', () => {
     const initialRing: Omit<Ring, 'id' | 'createdAt'> = {
       name: 'Ring 1',
       power: 'Power 1',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/ring1.png',
     }
 
@@ -28,7 +28,7 @@ describe('UpdateRingUseCase', () => {
     const updatedData = {
       name: 'Updated Ring 1',
       power: 'Updated Power 1',
-      forgedBy: Forgers.ANOES,
+      forgedBy: Forgers.DWARF,
     }
 
     const { ring } = await sut.execute({
@@ -59,22 +59,22 @@ describe('UpdateRingUseCase', () => {
     const initialRing: Omit<Ring, 'id' | 'createdAt'> = {
       name: 'Ring 1',
       power: 'Power 1',
-      forgedBy: Forgers.ANOES,
+      forgedBy: Forgers.DWARF,
       imageUrl: 'http://example.com/ring1.png',
     }
 
     await ringsRepository.createRing(initialRing)
 
     await Promise.all([
-      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELFOS }),
-      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELFOS }),
-      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELFOS }),
+      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELF }),
+      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELF }),
+      ringsRepository.createRing({ ...initialRing, forgedBy: Forgers.ELF }),
     ])
 
     await expect(
       sut.execute({
         id: 1,
-        forgedBy: Forgers.ELFOS,
+        forgedBy: Forgers.ELF,
       }),
     ).rejects.toThrow(MaxRingsForgedBySpecie)
   })

@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 export enum Forgers {
-  ELFOS = 'elfos',
-  ANOES = 'anões',
-  HOMENS = 'homens',
+  ELF = 'elfos',
+  DWARF = 'anões',
+  HUMAN = 'homens',
   SAURON = 'sauron',
 }
 

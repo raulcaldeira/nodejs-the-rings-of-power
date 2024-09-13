@@ -25,7 +25,7 @@ describe('GetAllRingsUseCase', () => {
       id: 2,
       name: 'Ring of Wisdom',
       power: 'Grants great wisdom',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/ring2.png',
     }
 

@@ -18,7 +18,7 @@ describe('DeleteRingUseCase', () => {
     const initialRing: Omit<Ring, 'id' | 'createdAt'> = {
       name: 'Ring 1',
       power: 'Power 1',
-      forgedBy: Forgers.ELFOS,
+      forgedBy: Forgers.ELF,
       imageUrl: 'http://example.com/ring1.png',
     }
 
