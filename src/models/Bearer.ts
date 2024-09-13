@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
-enum Species {
+export enum Species {
   ELF = 'elfo',
   DWARF = 'anão',
   HUMAN = 'homem',

@@ -1,8 +1,8 @@
 // src/database/data-source.ts
 
-import { Bearer } from '@/entities/Bearer'
-import { Ring } from '@/entities/Ring'
-import { RingBearer } from '@/entities/RingBearer'
+import { Bearer } from '@/models/Bearer'
+import { Ring } from '@/models/Ring'
+import { RingBearer } from '@/models/RingBearer'
 import { DataSource } from 'typeorm'
 
 export const AppDataSource = new DataSource({

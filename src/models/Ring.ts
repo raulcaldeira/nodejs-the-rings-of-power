@@ -11,9 +11,6 @@ export class Ring {
   @Column({ type: 'varchar', length: 100 })
   power: string
 
-  @Column({ type: 'varchar', length: 100 })
-  bearer: string
-
   @Column({ type: 'varchar', length: 100, name: 'forged_by' })
   forgedBy: string
 
