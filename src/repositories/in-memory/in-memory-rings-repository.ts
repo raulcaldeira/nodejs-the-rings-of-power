@@ -16,6 +16,12 @@ export class InMemoryRingsRepository implements RingsRepository {
     return ring
   }
 
+  async getAllRings(): Promise<Ring[]> {
+    const rings = this.items
+
+    return rings
+  }
+
   async countRingsForgedBy(forger: Forgers): Promise<number> {
     return this.items.filter((ring) => ring.forgedBy === forger).length
   }

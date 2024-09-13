@@ -16,6 +16,12 @@ export class TypeormRingsRepository implements RingsRepository {
     return await this.ormRepository.save(ring)
   }
 
+  async getAllRings(): Promise<Ring[]> {
+    const rings = await this.ormRepository.find()
+
+    return rings
+  }
+
   async countRingsForgedBy(forger: Forgers): Promise<number> {
     return await this.ormRepository.count({ where: { forgedBy: forger } })
   }
