@@ -41,4 +41,8 @@ export class InMemoryRingsRepository implements RingsRepository {
     this.items[ringIndex] = updatedRing
     return updatedRing
   }
+
+  async deleteRing(id: number): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== id)
+  }
 }

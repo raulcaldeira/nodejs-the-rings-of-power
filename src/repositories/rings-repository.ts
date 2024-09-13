@@ -8,4 +8,5 @@ export interface RingsRepository {
   findRingById(id: number): Promise<Ring | null>
   countRingsForgedBy(forger: Forgers): Promise<number>
   updateRing(id: number, data: Partial<CreateRingInput>): Promise<Ring | null>
+  deleteRing(id: number): Promise<void>
 }

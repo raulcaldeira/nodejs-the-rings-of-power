@@ -49,4 +49,8 @@ export class TypeormRingsRepository implements RingsRepository {
 
     return await this.ormRepository.save(ring)
   }
+
+  async deleteRing(id: number): Promise<void> {
+    await this.ormRepository.delete(id)
+  }
 }
