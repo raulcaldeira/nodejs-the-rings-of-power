@@ -12,4 +12,20 @@ export class InMemoryBearersRepository implements BearersRepository {
     this.items.push(bearer)
     return bearer
   }
+
+  async findBearerById(id: number): Promise<Bearer | null> {
+    return this.items.find((bearer) => bearer.id === id) || null
+  }
+
+  async updateBearer(
+    id: number,
+    data: Partial<Omit<Bearer, 'id' | 'createdAt'>>,
+  ): Promise<Bearer | null> {
+    const bearerIndex = this.items.findIndex((bearer) => bearer.id === id)
+    if (bearerIndex === -1) return null
+
+    const updatedRing = { ...this.items[bearerIndex], ...data }
+    this.items[bearerIndex] = updatedRing
+    return updatedRing
+  }
 }

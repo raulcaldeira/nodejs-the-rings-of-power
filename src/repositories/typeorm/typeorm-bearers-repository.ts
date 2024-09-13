@@ -15,4 +15,28 @@ export class TypeormBearersRepository implements BearersRepository {
 
     return await this.ormRepository.save(bearer)
   }
+
+  async findBearerById(id: number): Promise<Bearer | null> {
+    const bearer = await this.ormRepository.findOne({
+      where: { id },
+    })
+    return bearer || null
+  }
+
+  async updateBearer(
+    id: number,
+    data: Partial<CreateBearerInput>,
+  ): Promise<Bearer | null> {
+    const bearer = await this.ormRepository.findOne({
+      where: { id },
+    })
+
+    if (!bearer) {
+      return null
+    }
+
+    this.ormRepository.merge(bearer, data)
+
+    return await this.ormRepository.save(bearer)
+  }
 }
