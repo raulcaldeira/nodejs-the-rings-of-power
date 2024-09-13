@@ -22,7 +22,23 @@ export class InMemoryRingsRepository implements RingsRepository {
     return rings
   }
 
+  async findRingById(id: number): Promise<Ring | null> {
+    return this.items.find((ring) => ring.id === id) || null
+  }
+
   async countRingsForgedBy(forger: Forgers): Promise<number> {
     return this.items.filter((ring) => ring.forgedBy === forger).length
+  }
+
+  async updateRing(
+    id: number,
+    data: Partial<Omit<Ring, 'id' | 'createdAt'>>,
+  ): Promise<Ring | null> {
+    const ringIndex = this.items.findIndex((ring) => ring.id === id)
+    if (ringIndex === -1) return null
+
+    const updatedRing = { ...this.items[ringIndex], ...data }
+    this.items[ringIndex] = updatedRing
+    return updatedRing
   }
 }

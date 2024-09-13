@@ -1,6 +1,6 @@
 import { Forgers, Ring } from '@/database/entities/Ring'
 import { RingsRepository } from '@/repositories/rings-repository'
-import { MaxRingsForgedBySpecie } from '../errors/max-rings-forged-by-this-species'
+import { MaxRingsForgedBySpecie } from '../errors/max-rings-forged-by-this-species-error'
 
 interface CreateRingUseCaseRequest {
   name: string

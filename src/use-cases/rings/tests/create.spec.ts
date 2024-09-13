@@ -2,7 +2,7 @@ import { InMemoryRingsRepository } from '../../../repositories/in-memory/in-memo
 
 import { Forgers } from '../../../database/entities/Ring'
 import { expect, describe, it, beforeEach } from 'vitest'
-import { MaxRingsForgedBySpecie } from '../../../use-cases/errors/max-rings-forged-by-this-species'
+import { MaxRingsForgedBySpecie } from '../../errors/max-rings-forged-by-this-species-error'
 import { CreateRingUseCase } from '../create'
 
 let ringsRepository: InMemoryRingsRepository

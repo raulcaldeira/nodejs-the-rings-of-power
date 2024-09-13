@@ -22,7 +22,31 @@ export class TypeormRingsRepository implements RingsRepository {
     return rings
   }
 
+  async findRingById(id: number): Promise<Ring | null> {
+    const ring = await this.ormRepository.findOne({
+      where: { id },
+    })
+    return ring || null
+  }
+
   async countRingsForgedBy(forger: Forgers): Promise<number> {
     return await this.ormRepository.count({ where: { forgedBy: forger } })
+  }
+
+  async updateRing(
+    id: number,
+    data: Partial<CreateRingInput>,
+  ): Promise<Ring | null> {
+    const ring = await this.ormRepository.findOne({
+      where: { id },
+    })
+
+    if (!ring) {
+      return null
+    }
+
+    this.ormRepository.merge(ring, data)
+
+    return await this.ormRepository.save(ring)
   }
 }
