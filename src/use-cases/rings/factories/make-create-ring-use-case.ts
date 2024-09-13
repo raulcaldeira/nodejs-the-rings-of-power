@@ -3,7 +3,7 @@ import { CreateRingUseCase } from '../create'
 
 export function makeCreateRingUseCase() {
   const ringsRepository = new TypeormRingsRepository()
-  const createGymUseCase = new CreateRingUseCase(ringsRepository)
+  const createRingUseCase = new CreateRingUseCase(ringsRepository)
 
-  return createGymUseCase
+  return createRingUseCase
 }
