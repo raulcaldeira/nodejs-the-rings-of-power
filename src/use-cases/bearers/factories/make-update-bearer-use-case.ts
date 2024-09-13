@@ -1,7 +1,7 @@
 import { TypeormBearersRepository } from '@/repositories/typeorm/typeorm-bearers-repository'
 import { UpdateBearerUseCase } from '../update'
 
-export function makeCreateRingUseCase() {
+export function makeUpdateBearerUseCase() {
   const bearersRepository = new TypeormBearersRepository()
   const updateBearerUseCase = new UpdateBearerUseCase(bearersRepository)
 
