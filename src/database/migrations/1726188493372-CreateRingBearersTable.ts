@@ -7,8 +7,8 @@ export class CreateRingBearersTable1726188493372 implements MigrationInterface {
                 "id" SERIAL NOT NULL PRIMARY KEY,
                 "ring_id" INT NOT NULL,
                 "bearer_id" INT NOT NULL,
-                "start_date" DATE NOT NULL,
-                "end_date" DATE,
+                "start_date" TIMESTAMP NOT NULL,
+                "end_date" TIMESTAMP,
                 FOREIGN KEY ("ring_id") REFERENCES "ring"("id") ON DELETE CASCADE,
                 FOREIGN KEY ("bearer_id") REFERENCES "bearer"("id") ON DELETE CASCADE
             )

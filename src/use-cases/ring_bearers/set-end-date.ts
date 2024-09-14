@@ -1,5 +1,6 @@
 import { RingBearersRepository } from '@/repositories/ring-bearers-repository'
 import { RingBearerNotFoundError } from '@/use-cases/errors/ring-bearer-not-found-error'
+import { StartDateGreaterThanOrEqualEndDate } from '../errors/start-date-greater-than-or-equal-end-date-error'
 
 interface SetEndDateUseCaseRequest {
   ringId: number
@@ -24,6 +25,10 @@ export class SetEndDateUseCase {
 
     if (!existingRingBearer) {
       throw new RingBearerNotFoundError()
+    }
+
+    if (endDate <= new Date(existingRingBearer.startDate)) {
+      throw new StartDateGreaterThanOrEqualEndDate()
     }
 
     await this.ringBearersRepository.setEndDate(existingRingBearer.id, endDate)

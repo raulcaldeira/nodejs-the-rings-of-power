@@ -13,9 +13,9 @@ export class RingBearer {
   @ManyToOne(() => Bearer, { eager: true, nullable: false })
   bearer: Bearer
 
-  @Column({ type: 'date', name: 'start_date' })
+  @Column({ type: 'timestamp', name: 'start_date' })
   startDate: Date
 
-  @Column({ type: 'date', name: 'end_date', nullable: true })
+  @Column({ type: 'timestamp', name: 'end_date', nullable: true })
   endDate?: Date
 }

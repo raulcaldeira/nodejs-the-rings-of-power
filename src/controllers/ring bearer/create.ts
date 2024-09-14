@@ -45,7 +45,7 @@ export async function setRingBearer(
 
     if (error instanceof StartDateGreaterThanOrEqualEndDate) {
       return reply
-        .status(404)
+        .status(400)
         .send({ message: 'End date less than or equal start date' })
     }
 

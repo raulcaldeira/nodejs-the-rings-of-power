@@ -6,6 +6,7 @@ import { Forgers } from '@/database/entities/Ring'
 import { Species } from '@/database/entities/Bearer'
 import { SetEndDateUseCase } from '../set-end-date'
 import { RingBearerNotFoundError } from '@/use-cases/errors/ring-bearer-not-found-error'
+import { StartDateGreaterThanOrEqualEndDate } from '@/use-cases/errors/start-date-greater-than-or-equal-end-date-error'
 
 let ringBearersRepository: InMemoryRingBearersRepository
 let ringRepository: InMemoryRingsRepository
@@ -72,5 +73,30 @@ describe('SetEndDateUseCase', () => {
         endDate: new Date(),
       }),
     ).rejects.toBeInstanceOf(RingBearerNotFoundError)
+  })
+
+  it('should throw StartDateGreaterThanOrEqualEndDate if endDate is less than or equal to startDate', async () => {
+    vi.setSystemTime(new Date(2023, 0, 20, 8, 0, 0))
+
+    const bearer = await bearerRepository.findBearerById(1)
+    const ring = await ringRepository.findRingById(1)
+
+    const startDate = new Date()
+    await ringBearersRepository.createRingBearer({
+      bearer,
+      ring,
+      startDate,
+    })
+
+    vi.setSystemTime(new Date(2022, 0, 20, 8, 0, 0))
+    const invalidEndDate = new Date()
+
+    await expect(() =>
+      sut.execute({
+        bearerId: 1,
+        ringId: 1,
+        endDate: invalidEndDate,
+      }),
+    ).rejects.toBeInstanceOf(StartDateGreaterThanOrEqualEndDate)
   })
 })
