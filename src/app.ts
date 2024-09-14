@@ -7,11 +7,13 @@ import { env } from './env'
 import { AppDataSource } from './database/data-source'
 import { ringsRoutes } from './controllers/rings/routes'
 import { bearersRoutes } from './controllers/bearers/routes'
+import { ringBearersRoutes } from './controllers/ring bearer/routes'
 
 export const app = fastify()
 
 app.register(ringsRoutes)
 app.register(bearersRoutes)
+app.register(ringBearersRoutes)
 
 AppDataSource.initialize()
   .then(() => {

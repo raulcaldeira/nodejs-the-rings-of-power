@@ -4,6 +4,7 @@ import { RingNotFoundError } from '@/use-cases/errors/ring-not-found-error'
 import { BearerNotFoundError } from '@/use-cases/errors/bearer-not-found-error'
 import { RingsRepository } from '@/repositories/rings-repository'
 import { BearersRepository } from '@/repositories/bearers.repository'
+import { StartDateGreaterThanOrEqualEndDate } from '../errors/start-date-greater-than-or-equal-end-date-error'
 
 interface SetRingBearerUseCaseRequest {
   ringId: number
@@ -29,7 +30,10 @@ export class SetRingBearerUseCase {
     startDate,
     endDate,
   }: SetRingBearerUseCaseRequest): Promise<SetRingBearerUseCaseResponse> {
-    // Verifica se o Ring e o Bearer existem
+    if (endDate && endDate <= startDate) {
+      throw new StartDateGreaterThanOrEqualEndDate()
+    }
+
     const existingRing = await this.ringRepository.findRingById(ringId)
     const existingBearer = await this.bearerRepository.findBearerById(bearerId)
 
@@ -41,11 +45,9 @@ export class SetRingBearerUseCase {
       throw new BearerNotFoundError()
     }
 
-    // Verifica se já existe um portador para o anel
     const currentRingBearer =
       await this.ringBearersRepository.findByRing(ringId)
 
-    // Se existir um portador atual, atualiza a data de fim do portador anterior
     if (currentRingBearer) {
       await this.ringBearersRepository.setEndDate(
         currentRingBearer.id,
