@@ -41,6 +41,18 @@ export class SetRingBearerUseCase {
       throw new BearerNotFoundError()
     }
 
+    // Verifica se já existe um portador para o anel
+    const currentRingBearer =
+      await this.ringBearersRepository.findByRing(ringId)
+
+    // Se existir um portador atual, atualiza a data de fim do portador anterior
+    if (currentRingBearer) {
+      await this.ringBearersRepository.setEndDate(
+        currentRingBearer.id,
+        startDate,
+      )
+    }
+
     const ringBearer = await this.ringBearersRepository.createRingBearer({
       ring: existingRing,
       bearer: existingBearer,

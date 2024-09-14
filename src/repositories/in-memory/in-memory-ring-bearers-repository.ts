@@ -28,6 +28,13 @@ export class InMemoryRingBearersRepository implements RingBearersRepository {
     return ringBearer || null
   }
 
+  async findByRing(ring: number): Promise<RingBearer | null> {
+    const ringBearer = this.items.find(
+      (item) => item.ring.id === ring && !item.endDate,
+    )
+    return ringBearer || null
+  }
+
   async setEndDate(id: number, endDate: Date): Promise<void> {
     const ringBearer = this.items.find((item) => item.id === id)
 

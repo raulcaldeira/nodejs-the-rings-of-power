@@ -1,6 +1,6 @@
 import { TypeormRingsRepository } from '@/repositories/typeorm/typeorm-rings-repository'
 import { SetRingBearerUseCase } from '../set-ring-bearer'
-import { TypeormRingBearersRepository } from '@/repositories/typeorm/type-orm-ring-bearers-repository'
+import { TypeormRingBearersRepository } from '@/repositories/typeorm/typeorm-ring-bearers-repository'
 import { TypeormBearersRepository } from '@/repositories/typeorm/typeorm-bearers-repository'
 
 export function makeSetRingBearerUseCase() {
