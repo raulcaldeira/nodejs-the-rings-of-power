@@ -1,6 +1,7 @@
 import {
   CreateRingBearerInput,
   RingBearersRepository,
+  UpdateRingBearerInput,
 } from '../ring-bearers-repository'
 import { RingBearer } from '@/database/entities/RingBearer'
 
@@ -39,5 +40,19 @@ export class InMemoryRingBearersRepository implements RingBearersRepository {
     const ringBearer = this.items.find((item) => item.id === id)
 
     ringBearer.endDate = endDate
+  }
+
+  async updateRingBearer(
+    ringBearerId: number,
+    data: UpdateRingBearerInput,
+  ): Promise<void> {
+    const ringBearer = this.items.find((rb) => rb.id === ringBearerId)
+    if (ringBearer) {
+      Object.assign(ringBearer, data)
+    }
+  }
+
+  async deleteRingBearer(ringBearerId: number): Promise<void> {
+    this.items = this.items.filter((rb) => rb.id !== ringBearerId)
   }
 }

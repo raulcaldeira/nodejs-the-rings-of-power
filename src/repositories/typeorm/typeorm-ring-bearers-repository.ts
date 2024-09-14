@@ -3,6 +3,7 @@ import { AppDataSource } from '@/database/data-source' // Sua configuração de 
 import {
   CreateRingBearerInput,
   RingBearersRepository,
+  UpdateRingBearerInput,
 } from '../ring-bearers-repository'
 import { RingBearer } from '@/database/entities/RingBearer'
 import { RingBearerNotFoundError } from '@/use-cases/errors/ring-bearer-not-found-error'
@@ -55,5 +56,16 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
     this.ormRepository.merge(ringBearer, { endDate })
 
     await this.ormRepository.save(ringBearer)
+  }
+
+  async updateRingBearer(
+    ringBearerId: number,
+    data: UpdateRingBearerInput,
+  ): Promise<void> {
+    await this.ormRepository.update(ringBearerId, data)
+  }
+
+  async deleteRingBearer(ringBearerId: number): Promise<void> {
+    await this.ormRepository.delete(ringBearerId)
   }
 }
