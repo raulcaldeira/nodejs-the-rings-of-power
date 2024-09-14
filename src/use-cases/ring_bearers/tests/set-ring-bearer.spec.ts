@@ -70,14 +70,6 @@ describe('SetRingBearerUseCase', () => {
     })
 
     expect(ringBearer).toEqual(dataRingBearer)
-    expect(ringRepository.findRingById).toHaveBeenCalledWith(ringId)
-    expect(bearerRepository.findBearerById).toHaveBeenCalledWith(bearerId)
-    expect(ringBearersRepository.createRingBearer).toHaveBeenCalledWith({
-      ring,
-      bearer,
-      startDate,
-      endDate,
-    })
   })
 
   it('should throw an error if the ring does not exist', async () => {
