@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 export enum Species {
   ELF = 'elfo',
   DWARF = 'anão',
-  HUMAN = 'homem',
+  HUMAN = 'humano',
   MAGE = 'mago',
 }
 

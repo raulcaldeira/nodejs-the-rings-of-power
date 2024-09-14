@@ -6,10 +6,12 @@ import { ZodError } from 'zod'
 import { env } from './env'
 import { AppDataSource } from './database/data-source'
 import { ringsRoutes } from './controllers/rings/routes'
+import { bearersRoutes } from './controllers/bearers/routes'
 
 export const app = fastify()
 
 app.register(ringsRoutes)
+app.register(bearersRoutes)
 
 AppDataSource.initialize()
   .then(() => {
