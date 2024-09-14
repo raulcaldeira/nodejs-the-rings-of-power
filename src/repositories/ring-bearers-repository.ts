@@ -1,10 +1,15 @@
 // export type CreateRingInput = Omit<Ring, 'id' | 'createdAt'>
 
+import { Bearer } from '@/database/entities/Bearer'
 import { RingBearer } from '@/database/entities/RingBearer'
 
 export type CreateRingBearerInput = Omit<RingBearer, 'id'>
 
-export type UpdateRingBearerInput = Omit<RingBearer, 'id' | 'ring'>
+export interface UpdateRingBearerInput {
+  bearer?: Bearer
+  startDate?: Date
+  endDate?: Date
+}
 
 export interface RingBearersRepository {
   createRingBearer(data: CreateRingBearerInput): Promise<RingBearer | null>
