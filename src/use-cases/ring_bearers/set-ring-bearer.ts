@@ -5,6 +5,7 @@ import { BearerNotFoundError } from '@/use-cases/errors/bearer-not-found-error'
 import { RingsRepository } from '@/repositories/rings-repository'
 import { BearersRepository } from '@/repositories/bearers.repository'
 import { StartDateGreaterThanOrEqualEndDate } from '../errors/start-date-greater-than-or-equal-end-date-error'
+import { BearerAlreadyExistsForThisRingError } from '../errors/bearer-already-exists-for-this-ring-error'
 
 interface SetRingBearerUseCaseRequest {
   ringId: number
@@ -48,11 +49,15 @@ export class SetRingBearerUseCase {
     const currentRingBearer =
       await this.ringBearersRepository.findByRing(ringId)
 
+    // if (currentRingBearer) {
+    //   await this.ringBearersRepository.setEndDate(
+    //     currentRingBearer.id,
+    //     startDate,
+    //   )
+    // }
+
     if (currentRingBearer) {
-      await this.ringBearersRepository.setEndDate(
-        currentRingBearer.id,
-        startDate,
-      )
+      throw new BearerAlreadyExistsForThisRingError()
     }
 
     const ringBearer = await this.ringBearersRepository.createRingBearer({
