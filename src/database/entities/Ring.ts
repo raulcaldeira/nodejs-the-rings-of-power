@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 export enum Forgers {
   ELF = 'elfos',
   DWARF = 'anões',
-  HUMAN = 'homens',
+  HUMAN = 'humanos',
   SAURON = 'sauron',
 }
 
