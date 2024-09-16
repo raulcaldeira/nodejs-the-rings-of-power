@@ -14,11 +14,16 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       Forgers.SAURON,
     ]),
     imageUrl: z.string().url(),
+    bearerId: z.number().optional(),
+    startDate: z.string().transform((val) => new Date(val)),
+    endDate: z
+      .string()
+      .optional()
+      .transform((val) => (val ? new Date(val) : undefined)),
   })
 
-  const { name, power, forgedBy, imageUrl } = createRingBodySchema.parse(
-    request.body,
-  )
+  const { name, power, forgedBy, imageUrl, bearerId, startDate, endDate } =
+    createRingBodySchema.parse(request.body)
 
   const createRingUseCase = makeCreateRingUseCase()
 
@@ -27,6 +32,9 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     power,
     forgedBy,
     imageUrl,
+    bearerId,
+    startDate,
+    endDate,
   })
 
   return reply.status(201).send()
