@@ -8,8 +8,14 @@ import { AppDataSource } from './database/data-source'
 import { ringsRoutes } from './controllers/rings/routes'
 import { bearersRoutes } from './controllers/bearers/routes'
 import { ringBearersRoutes } from './controllers/ring bearer/routes'
+import cors from '@fastify/cors'
 
 export const app = fastify()
+
+app.register(cors, {
+  origin: 'http://localhost:5173', // Permitir requisições apenas do frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Defina os métodos permitidos
+})
 
 app.register(ringsRoutes)
 app.register(bearersRoutes)
