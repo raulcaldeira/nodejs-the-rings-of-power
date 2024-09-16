@@ -13,8 +13,9 @@ export interface UpdateRingBearerInput {
 
 export interface RingBearersRepository {
   createRingBearer(data: CreateRingBearerInput): Promise<RingBearer | null>
-  findByRingAndBearer(ring: number, bearer: number): Promise<RingBearer | null>
   findByRing(ring: number): Promise<RingBearer | null>
+  findByBearer(bearer: number): Promise<RingBearer[] | null>
+  findByRingAndBearer(ring: number, bearer: number): Promise<RingBearer | null>
   setEndDate(ringBearerId: number, endDate: Date): Promise<void>
   updateRingBearer(
     ringBearerId: number,

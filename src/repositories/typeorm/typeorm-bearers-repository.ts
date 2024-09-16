@@ -16,6 +16,12 @@ export class TypeormBearersRepository implements BearersRepository {
     return await this.ormRepository.save(bearer)
   }
 
+  async getAll(): Promise<Bearer[]> {
+    const bearers = await this.ormRepository.find()
+
+    return bearers
+  }
+
   async findBearerById(id: number): Promise<Bearer | null> {
     const bearer = await this.ormRepository.findOne({
       where: { id },

@@ -13,6 +13,12 @@ export class InMemoryBearersRepository implements BearersRepository {
     return bearer
   }
 
+  async getAll(): Promise<Bearer[]> {
+    const bearers = this.items
+
+    return bearers
+  }
+
   async findBearerById(id: number): Promise<Bearer | null> {
     return this.items.find((bearer) => bearer.id === id) || null
   }
