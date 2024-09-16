@@ -2,9 +2,10 @@ import { Ring } from '@/database/entities/Ring'
 import { RingsRepository } from '@/repositories/rings-repository'
 import { RingBearersRepository } from '@/repositories/ring-bearers-repository'
 import { BearersRepository } from '@/repositories/bearers.repository'
+import { Bearer } from '@/database/entities/Bearer'
 
 interface RingWithBearer extends Ring {
-  bearer: string | null
+  bearer: Bearer | null
 }
 
 interface GetAllRingsUseCaseResponse {
@@ -28,19 +29,18 @@ export class GetAllRingsUseCase {
         // Buscar o RingBearer pelo ringId
         const ringBearer = await this.ringBearersRepository.findByRing(ring.id)
 
-        let bearerName: string | null = null
+        let bearer: Bearer | null = null
         if (ringBearer) {
           // Passo 3: Buscar os detalhes do bearer pelo bearerId
-          const bearer = await this.bearersRepository.findBearerById(
+          bearer = await this.bearersRepository.findBearerById(
             ringBearer.bearer.id,
           )
-          bearerName = bearer?.name || null
         }
 
         // Retornar o ring com o nome do bearer associado
         return {
           ...ring,
-          bearer: bearerName,
+          bearer,
         }
       }),
     )

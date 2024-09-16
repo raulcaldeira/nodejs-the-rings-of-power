@@ -78,7 +78,7 @@ describe('GetAllRingsUseCase', () => {
     })
     expect(rings).toContainEqual({
       ...ringTwo,
-      bearer: 'Raul',
+      bearer,
     })
   })
 
