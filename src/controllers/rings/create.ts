@@ -15,7 +15,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     ]),
     imageUrl: z.string().url(),
     bearerId: z.number().optional(),
-    startDate: z.string().transform((val) => new Date(val)),
+    startDate: z
+      .string()
+      .optional()
+      .transform((val) => new Date(val)),
     endDate: z
       .string()
       .optional()
