@@ -10,7 +10,7 @@ export async function listAllBearers(
   try {
     const { bearers } = await listAllBearersUseCase.execute()
 
-    return reply.status(201).send(bearers)
+    return reply.status(200).send(bearers)
   } catch (error) {
     return reply.status(500).send({ message: 'Internal server error' })
   }
