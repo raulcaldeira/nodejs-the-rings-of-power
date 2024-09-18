@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeDeleteBearerUseCase } from '@/use-cases/bearers/factories/make-delete-bearer-use-case'
 import { BearerNotFoundError } from '@/use-cases/errors/bearer-not-found-error'
+import { BearerIsRingBearerError } from '@/use-cases/errors/bearer-is-ring-bearer-error'
 
 export async function deleteBearer(
   request: FastifyRequest,
@@ -24,6 +25,13 @@ export async function deleteBearer(
   } catch (error) {
     if (error instanceof BearerNotFoundError) {
       return reply.status(404).send({ message: 'Bearer not found' })
+    }
+
+    if (error instanceof BearerIsRingBearerError) {
+      return reply.status(400).send({
+        errorCode: 'BearerIsRingBearer',
+        message: 'O personagem está portando um anél.',
+      })
     }
 
     return reply.status(500).send({ message: 'Internal server error' })

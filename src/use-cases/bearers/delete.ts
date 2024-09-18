@@ -1,5 +1,7 @@
 import { BearersRepository } from '@/repositories/bearers.repository'
 import { BearerNotFoundError } from '../errors/bearer-not-found-error'
+import { RingBearersRepository } from '@/repositories/ring-bearers-repository'
+import { BearerIsRingBearerError } from '../errors/bearer-is-ring-bearer-error'
 
 interface DeleteBearerUseCaseRequest {
   id: number
@@ -10,7 +12,10 @@ interface DeleteBearerUseCaseResponse {
 }
 
 export class DeleteBearerUseCase {
-  constructor(private bearersRepository: BearersRepository) {}
+  constructor(
+    private bearersRepository: BearersRepository,
+    private ringBearersRepository: RingBearersRepository,
+  ) {}
 
   async execute({
     id,
@@ -20,6 +25,12 @@ export class DeleteBearerUseCase {
 
     if (!existingBearer) {
       throw new BearerNotFoundError()
+    }
+
+    const isRingBearer = await this.ringBearersRepository.findByBearer(id)
+
+    if (isRingBearer) {
+      throw new BearerIsRingBearerError()
     }
 
     // Deleta o Bearer
