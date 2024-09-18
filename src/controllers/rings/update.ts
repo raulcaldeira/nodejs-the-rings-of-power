@@ -46,9 +46,11 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
     }
 
     if (error instanceof MaxRingsForgedBySpecie) {
-      return reply
-        .status(400)
-        .send({ message: 'Max rings forged by this species exceeded' })
+      return reply.status(400).send({
+        errorCode: 'MaxRingsForgedBySpecie',
+        message:
+          'O número máximo de anéis forjados por essa spécie já foi atingido.',
+      })
     }
 
     return reply.status(500).send({ message: 'Internal server error' })
