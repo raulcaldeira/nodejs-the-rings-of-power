@@ -22,4 +22,5 @@ export interface RingBearersRepository {
     data: UpdateRingBearerInput,
   ): Promise<void>
   deleteRingBearer(ringBearerId: number): Promise<void>
+  deleteAllByRingId(ringId: number): Promise<void>
 }

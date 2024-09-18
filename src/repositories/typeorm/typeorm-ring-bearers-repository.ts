@@ -83,4 +83,13 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
   async deleteRingBearer(ringBearerId: number): Promise<void> {
     await this.ormRepository.delete(ringBearerId)
   }
+
+  async deleteAllByRingId(ring: number): Promise<void> {
+    await this.ormRepository
+      .createQueryBuilder()
+      .delete()
+      .from(RingBearer)
+      .where('ringId = :ringId', { ringId: ring })
+      .execute()
+  }
 }

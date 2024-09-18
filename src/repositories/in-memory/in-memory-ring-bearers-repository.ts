@@ -62,4 +62,8 @@ export class InMemoryRingBearersRepository implements RingBearersRepository {
   async deleteRingBearer(ringBearerId: number): Promise<void> {
     this.items = this.items.filter((rb) => rb.id !== ringBearerId)
   }
+
+  async deleteAllByRingId(ringId: number): Promise<void> {
+    this.items = this.items.filter((rb) => rb.ring.id !== ringId)
+  }
 }
