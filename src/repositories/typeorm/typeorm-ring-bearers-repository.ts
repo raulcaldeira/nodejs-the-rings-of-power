@@ -38,10 +38,15 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
     const ringBearer = await this.ormRepository.findOne({
       where: {
         ring: { id: ring },
-        endDate: null,
       },
     })
-    return ringBearer || null
+    console.log('RingBearer found:', ringBearer)
+
+    if (ringBearer && !ringBearer.endDate) {
+      return ringBearer
+    }
+
+    return null
   }
 
   async findByBearer(bearer: number): Promise<RingBearer[] | null> {
