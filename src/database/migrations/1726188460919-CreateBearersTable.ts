@@ -5,7 +5,7 @@ export class CreateBearersTable1726188460919 implements MigrationInterface {
     await queryRunner.query(`
             CREATE TABLE "bearers" (
                 "id" SERIAL NOT NULL PRIMARY KEY,
-                "name" VARCHAR(255) NOT NULL,
+                "name" VARCHAR(100) NOT NULL,
                 "species" VARCHAR(20) NOT NULL
             )
         `)
