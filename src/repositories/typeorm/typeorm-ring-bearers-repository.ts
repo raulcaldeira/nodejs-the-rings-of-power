@@ -60,8 +60,18 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
         bearer: { id: bearer },
         endDate: null,
       },
+      order: {
+        id: 'DESC',
+      },
     })
-    return ringBearer || null
+
+    if (ringBearer.length > 0) {
+      ringBearer.filter((rb) => !!rb.endDate)
+
+      return ringBearer
+    }
+
+    return null
   }
 
   async setEndDate(id: number, endDate: Date): Promise<void> {
