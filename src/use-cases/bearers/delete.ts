@@ -29,7 +29,7 @@ export class DeleteBearerUseCase {
 
     const isRingBearer = await this.ringBearersRepository.findByBearer(id)
 
-    if (isRingBearer) {
+    if (isRingBearer.length > 0) {
       throw new BearerIsRingBearerError()
     }
 
