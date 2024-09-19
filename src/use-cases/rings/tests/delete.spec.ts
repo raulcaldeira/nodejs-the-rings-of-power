@@ -3,14 +3,17 @@ import { DeleteRingUseCase } from '../delete'
 import { RingNotFoundError } from '@/use-cases/errors/ring-not-found-error'
 import { InMemoryRingsRepository } from '@/repositories/in-memory/in-memory-rings-repository'
 import { Forgers, Ring } from '@/database/entities/Ring'
+import { InMemoryRingBearersRepository } from '@/repositories/in-memory/in-memory-ring-bearers-repository'
 
 let ringsRepository: InMemoryRingsRepository
+let ringBearersRepository: InMemoryRingBearersRepository
 let sut: DeleteRingUseCase
 
 describe('DeleteRingUseCase', () => {
   beforeEach(() => {
     ringsRepository = new InMemoryRingsRepository()
-    sut = new DeleteRingUseCase(ringsRepository)
+    ringBearersRepository = new InMemoryRingBearersRepository()
+    sut = new DeleteRingUseCase(ringsRepository, ringBearersRepository)
   })
 
   it('should delete an existing ring', async () => {
