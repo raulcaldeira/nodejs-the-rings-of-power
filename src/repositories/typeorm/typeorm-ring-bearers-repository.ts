@@ -21,6 +21,12 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
     return await this.ormRepository.save(ringBearer)
   }
 
+  async listAllRingBearers(): Promise<RingBearer[]> {
+    const ringBearers = this.ormRepository.find()
+
+    return ringBearers
+  }
+
   async findByRingAndBearer(
     ringId: number,
     bearerId: number,

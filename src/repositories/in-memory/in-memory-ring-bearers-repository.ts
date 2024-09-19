@@ -19,6 +19,10 @@ export class InMemoryRingBearersRepository implements RingBearersRepository {
     return ringBearer
   }
 
+  async listAllRingBearers(): Promise<RingBearer[] | null> {
+    return this.items
+  }
+
   async findByRingAndBearer(
     ringId: number,
     bearerId: number,
