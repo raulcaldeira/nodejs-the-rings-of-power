@@ -22,7 +22,7 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
   }
 
   async listAllRingBearers(): Promise<RingBearer[]> {
-    const ringBearers = this.ormRepository.find()
+    const ringBearers = this.ormRepository.find({ order: { startDate: 'ASC' } })
 
     return ringBearers
   }
