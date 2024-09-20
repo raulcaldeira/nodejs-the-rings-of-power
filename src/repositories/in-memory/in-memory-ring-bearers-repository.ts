@@ -47,6 +47,22 @@ export class InMemoryRingBearersRepository implements RingBearersRepository {
     return ringBearer || null
   }
 
+  async findActiveRingBearersByStartDate(
+    ringId: number,
+    startDate: Date,
+  ): Promise<RingBearer[]> {
+    const activeRingBearers = this.items.filter(
+      (item) =>
+        item.ring.id === ringId &&
+        ((item.startDate <= startDate && !item.endDate) ||
+          (item.startDate <= startDate &&
+            item.endDate &&
+            item.endDate >= startDate)),
+    )
+
+    return activeRingBearers
+  }
+
   async setEndDate(id: number, endDate: Date): Promise<void> {
     const ringBearer = this.items.find((item) => item.id === id)
 

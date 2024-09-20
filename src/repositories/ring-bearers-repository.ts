@@ -1,5 +1,3 @@
-// export type CreateRingInput = Omit<Ring, 'id' | 'createdAt'>
-
 import { Bearer } from '@/database/entities/Bearer'
 import { RingBearer } from '@/database/entities/RingBearer'
 
@@ -17,6 +15,10 @@ export interface RingBearersRepository {
   findByRing(ring: number): Promise<RingBearer | null>
   findByBearer(bearer: number): Promise<RingBearer[] | null>
   findByRingAndBearer(ring: number, bearer: number): Promise<RingBearer | null>
+  findActiveRingBearersByStartDate(
+    ringId: number,
+    startDate: Date,
+  ): Promise<RingBearer[]>
   setEndDate(ringBearerId: number, endDate: Date): Promise<void>
   updateRingBearer(
     ringBearerId: number,

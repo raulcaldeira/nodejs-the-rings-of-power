@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm'
+import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm'
 import { AppDataSource } from '@/database/data-source' // Sua configuração de DataSource
 import {
   CreateRingBearerInput,
@@ -78,6 +78,31 @@ export class TypeormRingBearersRepository implements RingBearersRepository {
     }
 
     return null
+  }
+
+  async findActiveRingBearersByStartDate(
+    ringId: number,
+    startDate: Date,
+  ): Promise<RingBearer[]> {
+    const ringBearers = await this.ormRepository.find({
+      where: [
+        {
+          ring: { id: ringId },
+          startDate: LessThanOrEqual(startDate),
+          endDate: null,
+        },
+        {
+          ring: { id: ringId },
+          startDate: LessThanOrEqual(startDate),
+          endDate: MoreThanOrEqual(startDate),
+        },
+      ],
+      order: {
+        startDate: 'ASC',
+      },
+    })
+
+    return ringBearers
   }
 
   async setEndDate(id: number, endDate: Date): Promise<void> {
