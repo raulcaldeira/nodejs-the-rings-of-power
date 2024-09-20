@@ -16,8 +16,17 @@ export class InMemoryRingsRepository implements RingsRepository {
     return ring
   }
 
-  async getAllRings(): Promise<Ring[]> {
+  async getAllRings(search?: string): Promise<Ring[]> {
     const rings = this.items
+
+    if (search) {
+      return rings.filter((ring) => {
+        const matchesName = ring.name.includes(search)
+        const matchesPower = ring.power.includes(search)
+
+        return matchesName || matchesPower
+      })
+    }
 
     return rings
   }

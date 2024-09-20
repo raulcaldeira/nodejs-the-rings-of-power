@@ -23,8 +23,8 @@ export class GetAllRingsUseCase {
     private bearersRepository: BearersRepository,
   ) {}
 
-  async execute(): Promise<GetAllRingsUseCaseResponse> {
-    const rings = await this.ringsRepository.getAllRings()
+  async execute(search?: string): Promise<GetAllRingsUseCaseResponse> {
+    const rings = await this.ringsRepository.getAllRings(search)
 
     const ringsWithBearer = await Promise.all(
       rings.map(async (ring) => {

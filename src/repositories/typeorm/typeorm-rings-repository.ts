@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm'
+import { Like, Repository } from 'typeorm'
 import { Forgers, Ring } from '@/database/entities/Ring'
 import { CreateRingInput, RingsRepository } from '../rings-repository'
 import { AppDataSource } from '@/database/data-source' // Sua configuração de DataSource
@@ -16,8 +16,12 @@ export class TypeormRingsRepository implements RingsRepository {
     return await this.ormRepository.save(ring)
   }
 
-  async getAllRings(): Promise<Ring[]> {
-    const rings = await this.ormRepository.find()
+  async getAllRings(search?: string): Promise<Ring[]> {
+    const rings = await this.ormRepository.find({
+      where: search
+        ? [{ name: Like(`%${search}%`) }, { power: Like(`%${search}%`) }]
+        : undefined,
+    })
 
     return rings
   }
