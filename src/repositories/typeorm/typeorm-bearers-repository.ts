@@ -16,10 +16,27 @@ export class TypeormBearersRepository implements BearersRepository {
     return await this.ormRepository.save(bearer)
   }
 
-  async getAll(): Promise<Bearer[]> {
-    const bearers = await this.ormRepository.find()
+  async getAll(search?: string): Promise<Bearer[]> {
+    if (search) {
+      const lowercasedSearch = search.toLowerCase() // Converte a busca para minúsculas
 
-    return bearers
+      const bearers = await this.ormRepository
+        .createQueryBuilder()
+        .select('bearer')
+        .from(Bearer, 'bearer')
+        .where('LOWER(bearer.name) LIKE :search', {
+          search: `%${lowercasedSearch}%`,
+        })
+        .orWhere('LOWER(CAST(bearer.species AS TEXT)) LIKE :search', {
+          search: `%${lowercasedSearch}%`,
+        }) // Converte o enum para texto
+        .getMany()
+
+      return bearers
+    }
+
+    // Se não houver busca, retorna todos os portadores
+    return await this.ormRepository.find()
   }
 
   async findBearerById(id: number): Promise<Bearer | null> {

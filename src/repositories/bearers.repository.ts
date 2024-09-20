@@ -4,7 +4,7 @@ export type CreateBearerInput = Omit<Bearer, 'id'>
 
 export interface BearersRepository {
   createBearer(data: CreateBearerInput): Promise<Bearer | null>
-  getAll(): Promise<Bearer[] | null>
+  getAll(search?: string): Promise<Bearer[] | null>
   findBearerById(id: number): Promise<Bearer | null>
   updateBearer(
     id: number,

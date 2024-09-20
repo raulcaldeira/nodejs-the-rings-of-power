@@ -13,10 +13,23 @@ export class InMemoryBearersRepository implements BearersRepository {
     return bearer
   }
 
-  async getAll(): Promise<Bearer[]> {
+  async getAll(search?: string): Promise<Bearer[]> {
     const bearers = this.items
 
-    return bearers
+    if (search) {
+      const lowercasedSearch = search.toLowerCase() // Converte a busca para minúsculas
+
+      return bearers.filter((bearer) => {
+        const matchesName = bearer.name.toLowerCase().includes(lowercasedSearch) // Verifica o nome
+        const matchesSpecies = bearer.species
+          .toLowerCase()
+          .includes(lowercasedSearch) // Verifica a espécie
+
+        return matchesName || matchesSpecies // Retorna verdadeiro se corresponder a qualquer um
+      })
+    }
+
+    return bearers // Retorna todos os portadores se não houver busca
   }
 
   async findBearerById(id: number): Promise<Bearer | null> {

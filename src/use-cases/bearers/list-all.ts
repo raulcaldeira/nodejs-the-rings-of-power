@@ -1,15 +1,15 @@
 import { BearersRepository } from '@/repositories/bearers.repository'
 import { Bearer } from '@/database/entities/Bearer'
 
-interface GetAllRingsUseCaseResponse {
+interface GetAllBearersUseCaseResponse {
   bearers: Bearer[]
 }
 
 export class ListAllBearersUseCase {
   constructor(private bearersRepository: BearersRepository) {}
 
-  async execute(): Promise<GetAllRingsUseCaseResponse> {
-    const bearers = await this.bearersRepository.getAll()
+  async execute(search?: string): Promise<GetAllBearersUseCaseResponse> {
+    const bearers = await this.bearersRepository.getAll(search) // Passa o parâmetro de busca
 
     return {
       bearers,

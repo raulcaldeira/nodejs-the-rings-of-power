@@ -2,7 +2,7 @@ import { makeGetAllRingsUseCase } from '@/use-cases/rings/factories/make-get-all
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 interface ListRingsQuery {
-  search?: string // Define o tipo para o parâmetro de busca
+  search?: string
 }
 
 export async function list(
@@ -11,7 +11,6 @@ export async function list(
 ) {
   const getAllRingsUseCase = makeGetAllRingsUseCase()
 
-  // Obtendo o parâmetro de busca da query string
   const { search } = request.query
 
   const { rings } = await getAllRingsUseCase.execute(search)
