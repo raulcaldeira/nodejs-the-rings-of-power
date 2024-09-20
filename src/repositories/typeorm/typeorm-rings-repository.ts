@@ -1,4 +1,4 @@
-import { Like, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 import { Forgers, Ring } from '@/database/entities/Ring'
 import { CreateRingInput, RingsRepository } from '../rings-repository'
 import { AppDataSource } from '@/database/data-source' // Sua configuração de DataSource
@@ -17,13 +17,28 @@ export class TypeormRingsRepository implements RingsRepository {
   }
 
   async getAllRings(search?: string): Promise<Ring[]> {
-    const rings = await this.ormRepository.find({
-      where: search
-        ? [{ name: Like(`%${search}%`) }, { power: Like(`%${search}%`) }]
-        : undefined,
-    })
+    if (search) {
+      const lowercasedSearch = search.toLowerCase()
 
-    return rings
+      const rings = await this.ormRepository
+        .createQueryBuilder()
+        .select('ring')
+        .from(Ring, 'ring')
+        .where('LOWER(ring.name) LIKE :search', {
+          search: `%${lowercasedSearch}%`,
+        })
+        .orWhere('LOWER(ring.power) LIKE :search', {
+          search: `%${lowercasedSearch}%`,
+        })
+        .orWhere('LOWER(CAST(ring.forgedBy AS TEXT)) LIKE :search', {
+          search: `%${lowercasedSearch}%`,
+        }) // Busca na coluna forgedBy
+        .getMany()
+
+      return rings
+    }
+
+    return await this.ormRepository.find()
   }
 
   async findRingById(id: number): Promise<Ring | null> {

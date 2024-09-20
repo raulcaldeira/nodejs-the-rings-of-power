@@ -29,7 +29,7 @@ export class TypeormBearersRepository implements BearersRepository {
         })
         .orWhere('LOWER(CAST(bearer.species AS TEXT)) LIKE :search', {
           search: `%${lowercasedSearch}%`,
-        }) // Converte o enum para texto
+        })
         .getMany()
 
       return bearers
